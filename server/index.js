@@ -3,8 +3,9 @@ const app = express()
 const mongoose = require("mongoose")
 const RegistrationModel = require('./models/Registrations')
 app.use(express.json());
-
-mongoose.connect("mongodb+srv://vjsofficial006:reg123@registrations.4hnxn.mongodb.net/Website?retryWrites=true&w=majority&appName=Registrations")
+const cors = require('cors');
+app.use(cors());
+mongoose.connect("your-mongodb-connection-string")
 .then(() => console.log("MongoDB Connected"))
 .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -28,6 +29,7 @@ app.get("/registrations", async (req, res) => {
 app.post("/registrations", async (req, res) => {
     try {
         const registrationData = {...req.body}
+        console.log(registrationData);
         const maxRegIdDoc = await RegistrationModel.aggregate([
             {
                 $addFields: {
@@ -40,11 +42,17 @@ app.post("/registrations", async (req, res) => {
             { $limit: 1 } // Limit to the document with the highest regId
         ]);
 
-        if (!req.body.regId) {
+        console.log(maxRegIdDoc);
+        console.log(!req.body.regId);
+
+        if (maxRegIdDoc.length == 0){
+            registrationData.regId = "RID1";
+        }
+        else if(!req.body.regId){
             const numericPart = parseInt(maxRegIdDoc[0].regId.slice(3), 10); // Extract and convert number part to an integer
             registrationData.regId = "RID" + (numericPart + 1); // Generate the next regId
         }
-        else {
+        else{
             const found = await RegistrationModel.findOne({ regId: req.body.regId });
             if (found){
                 res.status(201).json({ message: "RegId already exists." });
@@ -53,8 +61,8 @@ app.post("/registrations", async (req, res) => {
         const newRegistration = new RegistrationModel(registrationData);
         console.log(newRegistration);
         await newRegistration.save();
+        console.log("saved");
         res.status(201).json({ message: "Inserted new registration successfully." });
-        
     } catch (err) {
         res.status(500).json({ message: err.message }); // Handle error
     }
@@ -83,4 +91,3 @@ app.delete("/registrations", async (req, res) => {
 app.listen(3001, ()=>{
     console.log("Server Runs on port " + 3001 + "!")
 });
-
