@@ -23,6 +23,7 @@ const RegistrationSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
     },
     college: {
         type: String,
@@ -30,6 +31,10 @@ const RegistrationSchema = new mongoose.Schema({
     },
     refCode: {
         type: String,
+    },
+    password: {
+        type: String,
+        required: true,
     }
 });
 
