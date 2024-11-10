@@ -9,6 +9,7 @@ const Regform = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const[email, setEmailId] = useState('');
     const [isEmailValid , setIsEmailValid] = useState(false);
+    const[event,setEvent] = useState('');
 
     const handleEmailChange = (e) => {
         const inputEmail = e.target.value;
@@ -28,6 +29,10 @@ const Regform = () => {
         setYear(e.target.value);
     };
 
+    const handleEventChange = (e) => {
+        setEvent(e.target.value);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.name.value.trim();
@@ -37,7 +42,7 @@ const Regform = () => {
         const refCode = e.target.refcode.value.trim();
 
         // Check if all fields have values
-        if (!name || !phoneNumber || phoneError || !year || !department || !email || !college || !refCode) {
+        if (!name || !phoneNumber || phoneError || !year || !department || !email || !college || !refCode || !event) {
             alert('Please fill in all fields correctly.');
             return;
         }
@@ -50,6 +55,7 @@ const Regform = () => {
             department,
             email,
             college,
+            event,
             refCode,
             regId : ""
         };
@@ -83,67 +89,87 @@ const Regform = () => {
     };
 
     return (
-        <div className="register-form">
-            <h3>Event Registration Form</h3>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>1. Full Name</label>
-                    <input type="text" placeholder="Enter your full name" name="name" />
+        <div class="container">
+      <div class="text">
+         Registration Form
+      </div>
+      <form onSubmit={handleSubmit}>
+         <div class="form-row">
+            <div class="input-data">
+                <input type="text" name = "name" required/>
+                <div class="underline"></div>
+                <label for="">Full Name</label>
                 </div>
-                <div className="form-group">
-                    <label>2. Phone Number  <br/>{isPhoneFocused && phoneError && (
-                        <span className="error" style={{ color: 'red', fontSize: '0.9em', marginTop: '5px' }}>
-                            Please enter a valid 10-digit phone number.
-                        </span>
-                    )}</label>
-                    <input
-                        type="text"
-                        placeholder="Enter your phone number"
-                        value={phoneNumber}
+            
+         </div>
+         <div class="form-row">
+         <div class="input-data">
+                <input type="number" name = "phno" value={phoneNumber}
                         onChange={handlePhoneChange}
                         onFocus={() => setIsPhoneFocused(true)}
-                        onBlur={() => setIsPhoneFocused(false)}
-                    />
+                        onBlur={() => setIsPhoneFocused(false)} required/>
+                <div class="underline"></div>
+                <label for="">Phone Number</label>
                 </div>
-                <div className="form-group">
-                    <label>3. Year</label>
-                    <select name="year" value={year} onChange={handleYearChange}>
+         </div>
+         
+         
+         <div class="form-row">
+            <div class="input-data">
+               <select name="year" value={year} onChange={handleYearChange}>
                         <option value="">Select your year</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
+                        <option value = "Mtech1">Mtech Int.1</option>
+                        <option value = "Mtech2">Mtech Int.2</option>
                     </select>
+            </div>
+         </div>
+          <div class="form-row">
+          <div class="input-data">
+                <input type="text" name = "dept" required/>
+                <div class="underline"></div>
+                <label for="">Department</label>
                 </div>
-                <div className="form-group">
-                    <label>4. Department</label>
-                    <input type="text" placeholder="Enter your department" name="dept" />
+         </div>
+          <div class="form-row">
+          <div class="input-data">
+                <input type="text" name = "email" onChange={handleEmailChange} required/>
+                <div class="underline"></div>
+                <label for="">Email</label>
                 </div>
-                <div className="form-group">
-                    <label>5. Email Id
-                    <br/>
-                    {isEmailValid && (
-                        <span className="error" style={{ color: 'red', fontSize: '0.9em', marginTop: '5px' }}>
-                        Please enter a valid email id.
-                    </span>
-                    )}
-                    
-
-                    </label>
-                    <input type="email" placeholder="Enter your email id" name="email" onChange={handleEmailChange}/>
+         </div>
+         <div class="form-row">
+         <div class="input-data">
+                <input type="text" name = "college"  required/>
+                <div class="underline"></div>
+                <label for="">College</label>
                 </div>
-                <div className="form-group">
-                    <label>6. College</label>
-                    <input type="text" placeholder="Enter your college" name="college" />
+         </div>
+          <div class="form-row">
+            <div class="input-data">
+               <select name="event" value={event} onChange={handleEventChange}>
+                        <option value="">Select event</option>
+                        <option value="Marketize">Marketize</option>
+                        <option value="Mela">Mela</option>
+                        <option value="Udaan">Udaan</option>
+                        <option value="Sycon">Sycon</option>
+                        <option value = "Ventura">Ventura</option>
+                    </select>
+            </div>
+         </div>
+         <div class="form-row">
+         <div class="input-data">
+                <input type="text" name = "refcode"  required/>
+                <div class="underline"></div>
+                <label for="">Reference Code</label>
                 </div>
-                <div className="form-group">
-                    <label>7. Reference Code</label>
-                    <input type="text" placeholder="Enter the reference code" name="refcode" />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-            {successMessage && <div className="success-message" style={{ color: 'green', marginTop: '10px' }}>{successMessage}</div>}
-        </div>
+         </div>
+         <button type="submit">Submit</button>
+      </form>
+      </div>
     );
 };
 

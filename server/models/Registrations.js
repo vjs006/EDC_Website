@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose")
 const RegistrationSchema = new mongoose.Schema({
     regId: {
@@ -8,7 +9,7 @@ const RegistrationSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    phNo: {
+    phoneNumber: {
         type: Number,
         required: true,
     },
@@ -16,20 +17,29 @@ const RegistrationSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    dept: {
+    department: {
         type: String,
         required: true,
     },
     email: {
         type: String,
         required: true,
+        unique: true,
     },
     college: {
         type: String,
         required: true,
     },
+    event : {
+        type : String,
+        required : true,
+    },
     refCode: {
         type: String,
+    },
+    password: {
+        type: String,
+        required: true,
     }
 });
 
