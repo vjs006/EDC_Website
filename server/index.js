@@ -5,7 +5,7 @@ const RegistrationModel = require('./models/Registrations')
 app.use(express.json());
 const cors = require('cors');
 app.use(cors());
-mongoose.connect("your-mongodb-connection-string")
+mongoose.connect("mongodb+srv://vjsofficial006:reg123@registrations.4hnxn.mongodb.net/registrations")
 .then(() => console.log("MongoDB Connected"))
 .catch((err) => console.error("MongoDB connection error:", err));
 
