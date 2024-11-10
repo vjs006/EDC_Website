@@ -108,9 +108,13 @@ const Regform = () => {
                         onChange={handlePhoneChange}
                         onFocus={() => setIsPhoneFocused(true)}
                         onBlur={() => setIsPhoneFocused(false)} required/>
+                
                 <div class="underline"></div>
                 <label for="">Phone Number</label>
                 </div>
+                {phoneError && (
+                    <span style={{ color: "red",marginLeft: "20px"  }}>Please enter a valid phone number.</span>
+                )}
          </div>
          
          
@@ -137,9 +141,13 @@ const Regform = () => {
           <div class="form-row">
           <div class="input-data">
                 <input type="text" name = "email" onChange={handleEmailChange} required/>
+                
                 <div class="underline"></div>
                 <label for="">Email</label>
                 </div>
+                {isEmailValid && (
+                    <span style={{ color: "red",marginLeft: "20px" }}>Please enter a valid email.</span>
+                )}
          </div>
          <div class="form-row">
          <div class="input-data">
